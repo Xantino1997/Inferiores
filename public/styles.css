@@ -1,0 +1,118 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f3f3f3;
+  color: #333;
+  margin: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background-color: #eaf7e2;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th,
+td {
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 12px;
+}
+
+th {
+  background-color: #4caf50;
+  color: white;
+}
+
+td {
+  font-size: 16px;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.result-input {
+  width: 50px;
+  text-align: center;
+  border: 1px solid #ddd;
+  padding: 5px;
+  font-size: 16px;
+}
+
+.checkbox-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.checkbox-row {
+  width: 24%;
+}
+
+.vs-table input[type="number"]::-webkit-outer-spin-button,
+.vs-table input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.vs-table input[type="number"] {
+  -moz-appearance: textfield;
+}
+#goToTablesBtn {
+  margin-top: 20px;
+  background-color: #2196f3;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#goToTablesBtn:hover {
+  background-color: #1976d2;
+}
+#captureBtn {
+  margin-top: 20px;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#captureBtn:hover {
+  background-color: #45a049;
+}
+
+td:nth-child(4) {
+  font-weight: bold;
+  color: black;
+  background-color: #ffcc00;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.categoria-colspan {
+  background-color: #4caf50;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+td.no-jugaron-cell {
+  background-color: white;
+}
+
+.no-jugaron-checkbox {
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,163 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
+  padding: 20px;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #4caf50; /* Color verde */
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+}
+
+.titulo {
+  margin: 0;
+  color: black;
+}
+
+button {
+  background-color: #4caf50; /* Botón verde */
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049; /* Verde más oscuro al pasar el mouse */
+}
+
+label {
+  margin-right: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-wheight: bold;
+}
+
+th {
+  background-color:#13647d; /* Encabezado de la tabla verde */
+  color: white;
+  padding: 10px;
+}
+
+td {
+  background-color: white;
+  padding: 10px;
+  text-align: center;
+}
+.equipos {
+  text-align: left;
+}
+.puntos,
+.posicion {
+  text-align: center; /* Centrar el texto en la celda */
+  font-size: 1.5em; /* Aumentar el tamaño del texto */
+  padding: 10px; /* Añadir un poco de espacio interno */
+  vertical-align: middle; 
+}
+
+.posicion {
+  background-color: orange; /* Color de fondo para las posiciones */
+}
+
+.puntos {
+  font-weight: bold;
+  color: white; /* Color de texto en blanco */
+  background: linear-gradient(135deg, #325ca8 30%, #0000FF 50%); /* Degradado diagonal de cian a azul */
+  text-align: center; /* Centrar el contenido */
+  padding: 10px;
+}
+
+td img {
+  width: 40px; /* Ancho de los logos de los equipos */
+  height: auto; /* Mantiene la proporción del logo */
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination button {
+  margin: 0 5px;
+}
+
+/* Estilo general de la tabla */
+/* #tablaPosiciones {
+  width: 100%;
+  border-collapse: collapse;
+} */
+.tablaPosiciones {
+  font-weight: bold;
+}
+
+.tablaPosiciones td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+.tablaPosiciones th {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Estilo para las imágenes de los logos */
+.tablaPosiciones img {
+  width: 50px; /* Ancho fijo */
+  height: 50px; /* Alto fijo */
+  object-fit: contain; /* Ajusta la imagen dentro del contenedor sin deformar */
+  margin-right: 10px; /* Espacio a la derecha del logo */
+}
+
+/* Estilo de la barra de navegación */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #f8f9fa; /* Color de fondo */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra */
+}
+
+/* Estilo de los botones de paginación */
+.pagination {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+.pagination button {
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+.pagination button:disabled {
+  background-color: #ccc; /* Color para botón deshabilitado */
+  cursor: not-allowed; /* Cambia el cursor */
+}
+
+/* Estilo del botón para capturar la tabla */
+#captureButton {
+  margin-top: 20px;
+  padding: 10px 15px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px; /* Bordes redondeados */
+}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="stylesTablas.css" />
+    <title>Tabla de Resultados</title>
+    <style>
+      /* Estilos CSS generales */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f3f3f3;
+        color: #333;
+        margin: 20px;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: #eaf7e2;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        text-align: center;
+        padding: 12px;
+      }
+      th {
+        background-color: #4caf50;
+        color: white;
+      }
+      td {
+        font-size: 16px;
+      }
+      .logo {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+      }
+      .versus {
+        font-weight: bold;
+        background-color: rgb(255, 200, 0);
+        padding: 5px;
+        border-radius: 5px;
+      }
+      #captureBtn,
+      #sendBtn,
+      #regresarBtn {
+        margin: 10px 5px;
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      #captureBtn:hover,
+      #sendBtn:hover,
+      #regresarBtn:hover {
+        background-color: #45a049;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+    <h1 id="tituloResultados">Resultados de la Fecha</h1>
+    <button id="captureBtn">Capturar Pantalla</button>
+
+    <div class="container">
+      <table id="tablaResultados">
+        <thead>
+          <tr>
+            <th class="titulo-resultados" colspan="6">
+              Resultados de fecha <span id="fecha"></span> | Zona:
+              <span id="zona">A</span>
+            </th>
+          </tr>
+          <tr>
+            <th>Categoría</th>
+            <th>Equipo Local</th>
+            <th>Goles Local</th>
+            <th>VS</th>
+            <th>Goles Visitante</th>
+            <th>Equipo Visitante</th>
+          </tr>
+        </thead>
+        <tbody id="tbodyResultados">
+          <!-- Aquí se generarán las filas de resultados dinámicamente -->
+        </tbody>
+      </table>
+    </div>
+
+    <button id="sendBtn">Enviar</button>
+    <button id="regresarBtn">Regresar</button>
+
+    <script>
+      // Obtener parámetros de la URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const fecha = urlParams.get("fecha");
+      const zona = urlParams.get("zona") || "A"; // Obtener la zona de la URL o usar "A" por defecto
+      document.getElementById("fecha").textContent = fecha; // Mostrar la fecha en la tabla
+      document.getElementById("zona").textContent = zona; // Mostrar la zona en la tabla
+
+      // Cargar resultados desde localStorage
+      function cargarResultados() {
+        const resultados =
+          JSON.parse(localStorage.getItem("resultadosParciales")) || [];
+        const tbodyResultados = document.getElementById("tbodyResultados");
+        const categorias = ["Tercera", "Cuarta", "Quinta"]; // Definimos las categorías
+
+        resultados.forEach((resultado, index) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                    <td>${categorias[index]}</td> <!-- Mostrar la categoría del partido -->
+                    <td><img src="${resultado.logoLocal}" class="logo" alt="Logo ${resultado.equipoLocal}"></td>
+                    <td>${resultado.resultadoLocal}</td>
+                    <td class="versus">VS</td>
+                    <td>${resultado.resultadoVisitante}</td>
+                    <td><img src="${resultado.logoVisitante}" class="logo" alt="Logo ${resultado.equipoVisitante}"></td>
+                `;
+          tbodyResultados.appendChild(row);
+        });
+      }
+
+      // Cargar resultados al iniciar
+      cargarResultados();
+
+      // Función para enviar datos
+      document.getElementById("sendBtn").addEventListener("click", () => {
+        const resultados =
+          JSON.parse(localStorage.getItem("resultadosParciales")) || [];
+        const categorias = ["tercera", "cuarta", "quinta"]; // Categorías definidas
+
+        const equiposActualizados = resultados
+          .map((resultado, index) => {
+            // Determinar los puntos para cada equipo según los goles
+            const puntosLocal = calcularPuntos(
+              resultado.resultadoLocal,
+              resultado.resultadoVisitante
+            );
+            const puntosVisitante = calcularPuntos(
+              resultado.resultadoVisitante,
+              resultado.resultadoLocal
+            );
+
+            return [
+              {
+                nombre: resultado.equipoLocal,
+                categoria: categorias[index],
+                puntos: puntosLocal,
+                golesFavor: resultado.resultadoLocal,
+                golesContra: resultado.resultadoVisitante,
+                partidosJugados: 1, // Sumar partido
+              },
+              {
+                nombre: resultado.equipoVisitante,
+                categoria: categorias[index],
+                puntos: puntosVisitante,
+                golesFavor: resultado.resultadoVisitante,
+                golesContra: resultado.resultadoLocal,
+                partidosJugados: 1, // Sumar partido
+              },
+            ];
+          })
+          .flat(); // Unir ambos equipos en una lista
+
+        // Enviar datos al backend para actualizar el archivo allTeams.json
+        fetch("/api/changeResult", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(equiposActualizados),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            Swal.fire({
+              title: "Datos enviados y equipos actualizados correctamente",
+              icon: "success",
+              confirmButtonText: "Volver al inicio",
+            }).then(() => {
+              window.location.href = "/"; // Redirigir a la página de inicio
+            });
+          })
+          .catch((error) => {
+            console.error("Error al enviar los datos:", error);
+            Swal.fire("Error al enviar los datos");
+          });
+      });
+
+      document.getElementById(
+        "tituloResultados"
+      ).textContent = `Resultados de fecha ${fecha}`;
+
+      // Función para regresar
+      document.getElementById("regresarBtn").addEventListener("click", () => {
+        window.history.back(); // Regresar a la página anterior
+      });
+
+      // Función para determinar los puntos en función de los goles
+      function calcularPuntos(golesLocal, golesVisitante) {
+        if (golesLocal > golesVisitante) return 3; // Ganó el local
+        if (golesLocal < golesVisitante) return 0; // Perdió el local
+        return 1; // Empate
+      }
+    </script>
+  </body>
+</html>

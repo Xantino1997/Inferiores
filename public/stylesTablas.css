@@ -1,68 +1,77 @@
 /* Estilos CSS generales */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f3f3f3;
-    color: #333;
-    margin: 20px;
-    align-items: center;
+  font-family: Arial, sans-serif;
+  background-color: #f3f3f3;
+  color: #333;
+  margin: 20px;
+  align-items: center;
 }
-.container{
-    display:flex;
-    justify-content:center;
+.container {
+  display: flex;
+  justify-content: center;
 }
 table {
-    width: auto; /* Cambiado a auto para hacer la tabla menos ancha */
-    max-width: 80%; /* Asegura que no exceda el ancho de la pantalla */
-    border-collapse: collapse;
-    margin: 20px 0;
-    background-color: #eaf7e2;
-    height: 1000%;
-    border-radius: 10px;
-    overflow: hidden;
+  width: auto; /* Cambiado a auto para hacer la tabla menos ancha */
+  max-width: 80%; /* Asegura que no exceda el ancho de la pantalla */
+  border-collapse: collapse;
+  margin: 20px 0;
+  background-color: #eaf7e2;
+  height: 1000%;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    text-align: center;
-    font-weight: bold;
-    padding: 20px; /* Aumentado el padding para hacer la tabla más alta */
+th,
+td {
+  border: 1px solid #ddd;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px; /* Aumentado el padding para hacer la tabla más alta */
 }
 
 th {
-    background-color: #4caf50;
-    color: white;
+  background-color: #4caf50;
+  color: white;
 }
 
 td {
-    font-size: 16px;
+  font-size: 16px;
 }
 
 .logo {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.VS {
+  background-color: black;
+  color: white;
 }
 
 .versus {
-    font-weight: bold; 
-    background-color: orange; 
-    padding: 5px; 
-    border-radius: 5px; 
+  font-weight: bold;
+  background-color: orange;
+  padding: 5px;
+  border-radius: 5px;
 }
-.titulo-resultados{
-    font-size:30px;
+.titulo-resultados {
+  font-size: 30px;
 }
-#captureBtn, #sendBtn, #regresarBtn {
-    margin: 10px 5px;
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
+#captureBtn,
+#sendBtn,
+#regresarBtn {
+  margin: 10px 5px;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
 }
 
-#captureBtn:hover, #sendBtn:hover, #regresarBtn:hover {
-    background-color: #45a049;
+#captureBtn:hover,
+#sendBtn:hover,
+#regresarBtn:hover {
+  background-color: #45a049;
 }

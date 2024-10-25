@@ -219,7 +219,7 @@
             const imgData = canvas.toDataURL("image/png");
             const a = document.createElement("a");
             a.href = imgData;
-            a.download = `resultados de ${nombre}.png`;
+            a.download = `resultados de ${equipoLocal} - ${equipoVisitante} .png`;
             a.click();
           }
         );

@@ -12,14 +12,22 @@
         background-color: #f3f3f3;
         color: #333;
         margin: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      h1 {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 10px;
       }
       .checkbox-container {
         display: flex;
         flex-wrap: wrap;
-        gap: 15px; /* Espacio entre checkboxes */
+        gap: 15px;
         margin: 20px 0;
+        justify-content: center;
       }
-
       .checkbox-item {
         display: flex;
         align-items: center;
@@ -29,16 +37,21 @@
         border-radius: 5px;
         transition: background-color 0.3s;
       }
-
       .checkbox-item:hover {
-        background-color: #e0f7e5; /* Color de fondo al pasar el mouse */
+        background-color: #e0f7e5;
       }
-
       input[type="checkbox"] {
-        margin-right: 10px; /* Espacio entre el checkbox y el texto */
+        margin-right: 10px;
+      }
+      .note {
+        font-size: 14px;
+        color: #666;
+        text-align: center;
+        margin-bottom: 15px;
       }
       table {
         width: 100%;
+        max-width: 700px;
         border-collapse: collapse;
         margin: 20px 0;
         background-color: #eaf7e2;
@@ -70,13 +83,24 @@
         padding: 5px;
         font-size: 16px;
       }
-      #fechaInput {
+      .fecha-container {
+        text-align: center;
         margin-bottom: 10px;
-        font-size: 16px;
       }
-      #capturePartialBtn,
-      #sendBtn {
-        margin-top: 20px;
+      label {
+        font-size: 16px;
+        font-weight: bold;
+      }
+      #fechaInput {
+        font-size: 16px;
+        text-align: center;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+      }
+      #sendBtn,
+      #goToTablesBtn {
+        margin-top: 10px;
         background-color: #4caf50;
         color: white;
         padding: 10px 20px;
@@ -85,21 +109,57 @@
         cursor: pointer;
         font-size: 16px;
       }
-      #capturePartialBtn:hover,
-      #sendBtn:hover {
+      #sendBtn:hover,
+      #goToTablesBtn:hover {
         background-color: #45a049;
+      }
+      /* Estilos responsivos para tabletas y celulares */
+      @media (max-width: 768px) {
+        .checkbox-container {
+          justify-content: center;
+        }
+        table {
+          font-size: 14px;
+        }
+        .result-input {
+          width: 40px;
+          font-size: 14px;
+        }
+        .logo {
+          width: 50px;
+          height: 50px;
+        }
+        th,
+        td {
+          padding: 8px;
+        }
+      }
+      @media (max-width: 480px) {
+        h1 {
+          font-size: 20px;
+        }
+        table {
+          width: 100%;
+        }
       }
     </style>
   </head>
   <body>
     <h1 id="tituloTabla">Resultados Fecha 1 || Zona A</h1>
 
+    <div class="note">
+      Nota: Selecciona primero el equipo local y luego el visitante.
+    </div>
+
     <!-- Campo de entrada para la fecha -->
-    <input
-      type="text"
-      id="fechaInput"
-      placeholder="Ingrese la fecha (ej. Fecha 2 || Zona B)"
-    />
+    <div class="fecha-container">
+      <label for="fechaInput">Ingrese la fecha:</label>
+      <input
+        type="text"
+        id="fechaInput"
+        placeholder="Ej. Fecha 2 || Zona B"
+      />
+    </div>
 
     <div class="checkbox-container" id="checkboxContainer">
       <!-- Aquí se generarán los checkboxes dinámicamente -->
@@ -109,14 +169,12 @@
       <!-- Aquí se generarán las filas de resultados dinámicamente -->
     </table>
 
-    <!-- Botones para capturar parcialmente y enviar -->
-    <!-- <button id="capturePartialBtn">Capturar Parcialmente y Guardar</button> -->
     <button id="sendBtn">Enviar y Ver Tabla Actualizada</button>
     <button id="goToTablesBtn">Ir a Tablas</button>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
       let resultados = [];
-
       let equipos = [];
       let equiposSeleccionados = [null, null]; // Array que guarda el equipo de la izquierda y derecha
 
@@ -156,149 +214,84 @@
 
         if (checkbox.checked) {
           if (equiposSeleccionados[0] === null) {
-            // Si el equipo en la izquierda no está seleccionado, seleccionamos este
             equiposSeleccionados[0] = equipoSeleccionado;
           } else if (
             equiposSeleccionados[1] === null &&
             equiposSeleccionados[0] !== equipoSeleccionado
           ) {
-            // Si ya hay uno en la izquierda y no está seleccionado en la derecha
             equiposSeleccionados[1] = equipoSeleccionado;
           } else {
-            checkbox.checked = false; // Si ya hay dos equipos, desmarca el checkbox
+            checkbox.checked = false;
             return;
           }
         } else {
-          // Si se desmarca el checkbox
           if (equiposSeleccionados[0] === equipoSeleccionado) {
-            equiposSeleccionados[0] = null; // Libera el espacio en la izquierda
+            equiposSeleccionados[0] = null;
           } else if (equiposSeleccionados[1] === equipoSeleccionado) {
-            equiposSeleccionados[1] = null; // Libera el espacio en la derecha
+            equiposSeleccionados[1] = null;
           }
         }
 
-        // Actualiza la tabla solo cuando hay dos equipos seleccionados
         if (equiposSeleccionados[0] && equiposSeleccionados[1]) {
           cargarTabla();
         }
       }
 
       function cargarTabla() {
-  const tablaPosiciones = document.getElementById("tablaPosiciones");
-  tablaPosiciones.innerHTML = "";
+        const tablaPosiciones = document.getElementById("tablaPosiciones");
+        tablaPosiciones.innerHTML = "";
 
-  const equiposLocal = equipos.filter(
-    (equipo) => equipo.nombre === equiposSeleccionados[0]
-  );
-  const equiposVisitante = equipos.filter(
-    (equipo) => equipo.nombre === equiposSeleccionados[1]
-  );
-  const categorias = ["tercera", "cuarta", "quinta"];
+        const equiposLocal = equipos.filter(
+          (equipo) => equipo.nombre === equiposSeleccionados[0]
+        );
+        const equiposVisitante = equipos.filter(
+          (equipo) => equipo.nombre === equiposSeleccionados[1]
+        );
+        const categorias = ["tercera", "cuarta", "quinta"];
 
-  categorias.forEach((categoria) => {
-    const localCategoria =
-      equiposLocal.find((equipo) => equipo.categoria === categoria) ||
-      equiposLocal[0];
-    const visitanteCategoria =
-      equiposVisitante.find((equipo) => equipo.categoria === categoria) ||
-      equiposVisitante[0];
+        categorias.forEach((categoria) => {
+          const localCategoria =
+            equiposLocal.find((equipo) => equipo.categoria === categoria) ||
+            equiposLocal[0];
+          const visitanteCategoria =
+            equiposVisitante.find((equipo) => equipo.categoria === categoria) ||
+            equiposVisitante[0];
 
-    const categoriaRow = document.createElement("tr");
-    categoriaRow.innerHTML = `<td colspan="8" class="categoria-colspan">${categoria.toUpperCase()}</td>`;
-    tablaPosiciones.appendChild(categoriaRow);
+          const categoriaRow = document.createElement("tr");
+          categoriaRow.innerHTML = `<td colspan="8" class="categoria-colspan">${categoria.toUpperCase()}</td>`;
+          tablaPosiciones.appendChild(categoriaRow);
 
-    const matchRow = document.createElement("tr");
-    
-    // Construir la URL del logo
-    const logoLocalUrl = `https://inferiores-uavb.vercel.app/Logo/${localCategoria.nombre.toLowerCase().replace(/ /g, "_")}.png`;
-    const logoVisitanteUrl = `https://inferiores-uavb.vercel.app/Logo/${visitanteCategoria.nombre.toLowerCase().replace(/ /g, "_")}.png`;
+          const matchRow = document.createElement("tr");
+          const logoLocalUrl = `https://inferiores-uavb.vercel.app/Logo/${localCategoria.nombre.toLowerCase().replace(/ /g, "_")}.png`;
+          const logoVisitanteUrl = `https://inferiores-uavb.vercel.app/Logo/${visitanteCategoria.nombre.toLowerCase().replace(/ /g, "_")}.png`;
 
-    matchRow.innerHTML = `
-      <td><img src="${logoLocalUrl}" class="logo" alt="Logo ${localCategoria.nombre}"></td>
-      <td>${localCategoria.nombre}</td>
-      <td><input type="number" class="result-input" placeholder="0"></td>
-      <td>VS</td>
-      <td><input type="number" class="result-input" placeholder="0"></td>
-      <td>${visitanteCategoria.nombre}</td>
-      <td><img src="${logoVisitanteUrl}" class="logo" alt="Logo ${visitanteCategoria.nombre}"></td>
-      <td><input type="checkbox" onchange="marcarNoJugaron(this)"/> No jugaron</td>
-    `;
-    tablaPosiciones.appendChild(matchRow);
-  });
-}
+          matchRow.innerHTML = `
+            <td><img src="${logoLocalUrl}" class="logo" alt="Logo ${localCategoria.nombre}"></td>
+            <td>${localCategoria.nombre}</td>
+            <td><input type="number" class="result-input" placeholder="0"></td>
+            <td>VS</td>
+            <td><input type="number" class="result-input" placeholder="0"></td>
+            <td>${visitanteCategoria.nombre}</td>
+            <td><img src="${logoVisitanteUrl}" class="logo" alt="Logo ${visitanteCategoria.nombre}"></td>
+          `;
+          tablaPosiciones.appendChild(matchRow);
+        });
+      }
 
-      // Capturar parcialmente los resultados y guardarlos en localStorage
-      // document
-      //   .getElementById("capturePartialBtn")
-      //   .addEventListener("click", () => {
-      //     capturarResultadosParciales();
-      //   });
-
-      // Capturar los resultados de la tabla
-      function capturarResultadosParciales() {
-        const filas = document.querySelectorAll("#tablaPosiciones tr");
-        resultados = [];
-        filas.forEach((fila) => {
-          const inputs = fila.querySelectorAll('input[type="number"]');
-          const noJugaron = fila.querySelector(
-            'input[type="checkbox"]'
-          )?.checked;
-
-          // Comprobar si hay resultados ingresados y no jugaron
-          if (inputs.length > 0) {
-            const categoria = fila.children[0].textContent; // Captura la categoría de la fila
-            const resultado = {
-              categoria: categoria, // Agregar categoría al objeto resultado
-              equipoLocal: fila.children[1].textContent,
-              equipoVisitante: fila.children[5].textContent,
-              logoLocal: fila.children[0].querySelector("img").src,
-              logoVisitante: fila.children[6].querySelector("img").src,
-              resultadoLocal: noJugaron ? "no jugaron" : inputs[0].value,
-              resultadoVisitante: noJugaron ? "no jugaron" : inputs[1].value,
-              puntosLocal: calcularPuntos(
-                inputs[0].value,
-                inputs[1].value,
-                noJugaron
-              ),
-              puntosVisitante: calcularPuntos(
-                inputs[1].value,
-                inputs[0].value,
-                noJugaron
-              ),
-            };
-            resultados.push(resultado);
+      document
+        .getElementById("sendBtn")
+        .addEventListener("click", () => {
+          const fechaInput = document.getElementById("fechaInput").value.trim();
+          if (!fechaInput) {
+            Swal.fire({
+              icon: "warning",
+              title: "Por favor ingrese la fecha",
+              text: "Es necesario ingresar la fecha de la tabla.",
+            });
           }
         });
-        localStorage.setItem("resultadosParciales", JSON.stringify(resultados));
-        Swal.fire(
-          "Guardado",
-          "Se ha capturado parcialmente la tabla",
-          "success"
-        );
-      }
 
-      // Calcular puntos
-      function calcularPuntos(golesLocal, golesVisitante, noJugaron) {
-        if (noJugaron) return 0;
-        if (golesLocal > golesVisitante) return 3;
-        if (golesLocal < golesVisitante) return 0;
-        return 1;
-      }
-
-      // Enviar los resultados y redirigir a la tabla actualizada
-      document.getElementById("sendBtn").addEventListener("click", () => {
-        const fecha =
-          document.getElementById("fechaInput").value || "Fecha 1 || Zona A";
-        capturarResultadosParciales(); // Captura parcial antes de enviar
-        window.location.href = `tablas.html?fecha=${encodeURIComponent(fecha)}`;
-      });
-// Redirigir a tablas.html cuando se presiona el botón
-document.getElementById("goToTablesBtn").addEventListener("click", () => {
-    window.location.href = "showPosition.html";
-  });
-      // Cargar datos iniciales
       cargarDatos();
     </script>
   </body>
 </html>
-

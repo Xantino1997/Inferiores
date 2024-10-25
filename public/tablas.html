@@ -109,6 +109,7 @@
       function cargarResultados() {
         const resultados =
           JSON.parse(localStorage.getItem("resultadosParciales")) || [];
+        console.log("Resultados en localStorage:", resultados); // Verificación en consola
         const tbodyResultados = document.getElementById("tbodyResultados");
         const categorias = ["Tercera", "Cuarta", "Quinta"]; // Definimos las categorías
 
@@ -116,11 +117,11 @@
           const row = document.createElement("tr");
           row.innerHTML = `
                     <td>${categorias[index]}</td> <!-- Mostrar la categoría del partido -->
-                    <td><img src="${resultado.logoLocal}" class="logo" alt="Logo ${resultado.equipoLocal}"></td>
+                    <td><img src="${resultado.logoLocal}" class="logo" alt="Logo ${resultado.equipoLocal}" onerror="this.onerror=null; this.src='ruta/default/logo.png';"></td>
                     <td>${resultado.resultadoLocal}</td>
                     <td class="versus">VS</td>
                     <td>${resultado.resultadoVisitante}</td>
-                    <td><img src="${resultado.logoVisitante}" class="logo" alt="Logo ${resultado.equipoVisitante}"></td>
+                    <td><img src="${resultado.logoVisitante}" class="logo" alt="Logo ${resultado.equipoVisitante}" onerror="this.onerror=null; this.src='ruta/default/logo.png';"></td>
                 `;
           tbodyResultados.appendChild(row);
         });
@@ -203,10 +204,23 @@
 
       // Función para determinar los puntos en función de los goles
       function calcularPuntos(golesLocal, golesVisitante) {
-        if (golesLocal > golesVisitante) return 3; // Ganó el local
-        if (golesLocal < golesVisitante) return 0; // Perdió el local
+        if (golesLocal > golesVisitante) return 3; // Victoria
+        if (golesLocal < golesVisitante) return 0; // Derrota
         return 1; // Empate
       }
+
+      // Capturar la pantalla
+      document.getElementById("captureBtn").addEventListener("click", () => {
+        html2canvas(document.querySelector("#tablaResultados")).then(
+          (canvas) => {
+            const imgData = canvas.toDataURL("image/png");
+            const a = document.createElement("a");
+            a.href = imgData;
+            a.download = "resultados.png";
+            a.click();
+          }
+        );
+      });
     </script>
   </body>
 </html>

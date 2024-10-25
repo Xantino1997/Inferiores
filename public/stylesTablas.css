@@ -29,10 +29,10 @@ td {
   padding: 20px; /* Aumentado el padding para hacer la tabla más alta */
 }
 
-/* th {
+th {
   background-color: #4caf50;
   color: white;
-} */
+}
 
 td {
   font-size: 16px;
@@ -52,16 +52,7 @@ td {
 }
 
 .versus {
-  font-family: "Courier New", Courier, monospace; /* Cambia la fuente aquí */
-  font-weight: bold;
-  font-size: 1.2em; /* Ajusta el tamaño según tu preferencia */
-  text-transform: uppercase; /* Convierte a mayúsculas */
-  letter-spacing: 2px; /* Espaciado entre letras */
-  padding: 5px 10px;
-  border-radius: 5px; /* Bordes redondeados */
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Sombra alrededor */
-  background-color: black important;
-  color: white;
+ 
 }
 
 .titulo-resultados {

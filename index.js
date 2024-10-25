@@ -64,6 +64,7 @@ app.get("/allTeams", (req, res) => {
     res.json(JSON.parse(data)); // Enviar los datos como respuesta
   });
 });
+//ready to start
 
 
 app.post("/changeResult", (req, res) => {

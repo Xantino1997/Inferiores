@@ -30,13 +30,19 @@ input[type="text"] {
   max-width: 400px;
   margin-bottom: 20px;
 }
-
+.categoria-colspan{
+  background-color: red;
+}
 .checkbox-container {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
   margin-bottom: 20px;
+}
+
+.versus{
+  background-color:green;
 }
 
 .checkbox-item {

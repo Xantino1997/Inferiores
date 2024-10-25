@@ -72,8 +72,9 @@
       id="equiposEnfrentamiento"
       style="display: flex; justify-content: center; font-weight: bold"
     >
-      <span id="equipoLocal"></span> <span class="versus">VS</span>
-      <span id="equipoVisitante"></span>
+      <h2 id="equipoLocal">Nombre Equipo Local</h2>
+      <span class="versus">VS</span>
+      <h2 id="equipoVisitante">Nombre Equipo Visitante</h2>
     </div>
     <button id="captureBtn">Capturar Pantalla</button>
 
@@ -103,6 +104,9 @@
 
     <button id="sendBtn">Enviar</button>
     <button id="regresarBtn">Inicio</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
       // Obtener parámetros de la URL
@@ -229,16 +233,18 @@
       }
 
       document.getElementById("captureBtn").addEventListener("click", () => {
-        html2canvas(document.body).then((canvas) => {
+        const captureElement = document.querySelector(".container");
+
+        html2canvas(captureElement).then((canvas) => {
           const imgData = canvas.toDataURL("image/png");
 
-          // Obtén los nombres de los equipos del primer enfrentamiento
+          // Obtén los nombres de los equipos para usar en el nombre del archivo
           const equipoLocal =
             document.getElementById("equipoLocal").textContent;
           const equipoVisitante =
             document.getElementById("equipoVisitante").textContent;
 
-          // Usa los nombres de los equipos en el nombre del archivo descargado
+          // Crear el enlace para descargar la imagen con el nombre de los equipos
           const a = document.createElement("a");
           a.href = imgData;
           a.download = `${equipoLocal}_VS_${equipoVisitante}.png`;

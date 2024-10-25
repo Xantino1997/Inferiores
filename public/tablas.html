@@ -228,13 +228,20 @@
         return 1; // Empate
       }
 
-      // Capturar la pantalla incluyendo los equipos enfrentados en la imagen
       document.getElementById("captureBtn").addEventListener("click", () => {
         html2canvas(document.body).then((canvas) => {
           const imgData = canvas.toDataURL("image/png");
+
+          // Obtén los nombres de los equipos del primer enfrentamiento
+          const equipoLocal =
+            document.getElementById("equipoLocal").textContent;
+          const equipoVisitante =
+            document.getElementById("equipoVisitante").textContent;
+
+          // Usa los nombres de los equipos en el nombre del archivo descargado
           const a = document.createElement("a");
           a.href = imgData;
-          a.download = `resultados_de_los_partidos.png`;
+          a.download = `${equipoLocal}_VS_${equipoVisitante}.png`;
           a.click();
         });
       });

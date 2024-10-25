@@ -37,7 +37,10 @@ th {
 td {
   font-size: 16px;
 }
-
+.categoria {
+  color: #00ffff;
+  font-weight: bold;
+}
 .logo {
   width: 60px;
   height: 60px;

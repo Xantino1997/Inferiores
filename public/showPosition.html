@@ -92,7 +92,6 @@
         cargarDatos(categoria); // Llama a cargarDatos con la categoría seleccionada
         paginaActual = 1; // Reiniciar a la primera página
       }
-
       // Cargar tabla con paginación
       function cargarTabla() {
         const tabla = document.querySelector("#tablaPosiciones tbody");
@@ -105,18 +104,24 @@
 
         equiposParaMostrar.forEach((equipo, index) => {
           const row = document.createElement("tr");
+
+          // Construir la URL del logo del equipo
+          const logoUrl = `https://inferiores-uavb.vercel.app/Logo/${equipo.nombre
+            .toLowerCase()
+            .replace(/ /g, "_")}.png`;
+
           row.innerHTML = `
-            <td class="puntos">${
-              (paginaActual - 1) * equiposPorPagina + index + 1
-            }</td>
-             <td class="equipos"><img src="${equipo.logo}" alt="${
+      <td class="puntos">${
+        (paginaActual - 1) * equiposPorPagina + index + 1
+      }</td>
+      <td class="equipos"><img src="${logoUrl}" alt="${
             equipo.nombre
           } logo" /> ${equipo.nombre}</td>
-            <td class="posicion">${equipo.puntos}</td>
-            <td>${equipo.partidos_jugados}</td>
-            <td>${equipo.goles_favor}</td>
-            <td>${equipo.goles_contra}</td>
-          `;
+      <td class="posicion">${equipo.puntos}</td>
+      <td>${equipo.partidos_jugados}</td>
+      <td>${equipo.goles_favor}</td>
+      <td>${equipo.goles_contra}</td>
+    `;
           tabla.appendChild(row);
         });
 

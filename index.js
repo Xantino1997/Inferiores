@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.static("public")); // Ensure the 'public' folder contains your HTML file
 const filePath = path.join(__dirname, "allTeams.json"); // Ruta correcta al archivo
 
-app.use(express.static("Logo")); // Servir imágenes estáticas de la carpeta 'Logo'
+app.use(express.static("./Logo")); // Servir imágenes estáticas de la carpeta 'Logo'
 
 app.use(express.json()); // Para procesar JSON en las solicitudes
 

@@ -101,7 +101,7 @@
       // Obtener parámetros de la URL
       const urlParams = new URLSearchParams(window.location.search);
       const fecha = urlParams.get("fecha");
-      const zona = urlParams.get("zona") || "A"; // Obtener la zona de la URL o usar "A" por defecto
+      const zona = urlParams.get("zona") || ""; // Obtener la zona de la URL o usar "A" por defecto
       document.getElementById("fecha").textContent = fecha; // Mostrar la fecha en la tabla
       document.getElementById("zona").textContent = zona; // Mostrar la zona en la tabla
 

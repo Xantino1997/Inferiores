@@ -31,7 +31,7 @@ input[type="text"] {
   margin-bottom: 20px;
 }
 .categoria-colspan{
-  background-color: red;
+  background-color:#4caf50;;
 }
 .checkbox-container {
   display: flex;
@@ -42,7 +42,7 @@ input[type="text"] {
 }
 
 .versus{
-  background-color:green;
+  background-color:#eb7434;
 }
 
 .checkbox-item {

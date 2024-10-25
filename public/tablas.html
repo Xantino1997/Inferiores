@@ -169,7 +169,7 @@
           .flat(); // Unir ambos equipos en una lista
 
         // Enviar datos al backend para actualizar el archivo allTeams.json
-        fetch("/api/changeResult", {
+        fetch("https://inferiores-vack.vercel.app/changeResult", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

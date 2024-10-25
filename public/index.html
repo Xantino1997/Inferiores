@@ -121,7 +121,7 @@
       let equiposSeleccionados = [null, null]; // Array que guarda el equipo de la izquierda y derecha
 
       function cargarDatos() {
-        fetch("/api/allTeams")
+        fetch("https://inferiores-vack.vercel.app/allTeams")
           .then((response) => response.json())
           .then((data) => {
             equipos = data;

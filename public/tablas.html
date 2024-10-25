@@ -40,18 +40,12 @@
         border-radius: 50%;
       }
       .versus {
-        font-family: "Courier New", Courier, monospace; /* Cambia la fuente aquí */
         font-weight: bold;
-        font-size: 1.2em; /* Ajusta el tamaño según tu preferencia */
-        text-transform: uppercase; /* Convierte a mayúsculas */
-        letter-spacing: 2px; /* Espaciado entre letras */
-        padding: 5px 10px;
-        border-radius: 5px; /* Bordes redondeados */
-        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Sombra alrededor */
-        background-color: black;
-        color: white;
+        background-color: rgb(255, 200, 0);
+        padding: 5px;
+        border-radius: 5px;
       }
-
+      
       #captureBtn,
       #sendBtn,
       #regresarBtn {
@@ -137,7 +131,7 @@
       <td>${categorias[index]}</td>
       <td><img src="${resultado.logoLocal}" class="logo" alt="Logo ${resultado.equipoLocal}" onerror="this.onerror=null; this.src='ruta/default/logo.png';"></td>
       <td>${resultado.resultadoLocal}</td>
-      <td>VS</td>
+      <td class="versus">VS</td>
       <td>${resultado.resultadoVisitante}</td>
       <td><img src="${resultado.logoVisitante}" class="logo" alt="Logo ${resultado.equipoVisitante}" onerror="this.onerror=null; this.src='ruta/default/logo.png';"></td>
     `;

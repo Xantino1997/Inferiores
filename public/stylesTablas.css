@@ -48,7 +48,7 @@ td {
   color: white;
   border-radius: 50%;
   border: 3px solid white;
-  padding: 10px;
+  padding: 5px;
 }
 
 .versus {
@@ -60,6 +60,8 @@ td {
   padding: 5px 10px;
   border-radius: 5px; /* Bordes redondeados */
   box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* Sombra alrededor */
+  background-color: black;
+  color: white;
 }
 .titulo-resultados {
   font-size: 30px;

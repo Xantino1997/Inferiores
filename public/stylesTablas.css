@@ -68,8 +68,39 @@ td {
 }
 
 .titulo-resultados {
-  font-size: 30px;
+    font-size: 1.2em;
+    text-align: center;
+    background-color: #f0f0f0; /* Color de fondo general */
+    padding: 10px;
+    color: #333;
+    border-bottom: 2px solid #ddd;
 }
+
+.titulo-resultados div {
+    margin: 5px 0; /* Espacio entre las líneas */
+}
+
+#fecha {
+    font-weight: bold;
+}
+
+#equipoLocal,
+#equipoVisitante {
+    font-weight: bold;
+    color: #333;
+}
+
+.VS {
+    background-color: #000;
+    color: #00FFFF; /* Color cian */
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 0 5px;
+    text-transform: uppercase;
+    font-family: "Courier New", Courier, monospace;
+}
+
 #captureBtn,
 #sendBtn,
 #regresarBtn {

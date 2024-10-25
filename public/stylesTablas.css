@@ -38,7 +38,7 @@ td {
   font-size: 16px;
 }
 .categoria {
-  color: #00ffff;
+  background: orange;
   font-weight: bold;
 }
 .logo {

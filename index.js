@@ -65,7 +65,6 @@ app.get("/allTeams", (req, res) => {
   });
 });
 
-
 app.post("/changeResult", (req, res) => {
   const equiposActualizados = req.body; // Los datos enviados desde el frontend
 
@@ -88,24 +87,28 @@ app.post("/changeResult", (req, res) => {
       );
 
       if (equipo) {
-        // Actualización directa de los valores solo si no son null ni undefined
-        if (equipoActualizado.golesFavor != null) {
-          equipo.goles_favor =
-            Number(equipoActualizado.golesFavor) + Number(equipo.goles_favor); // Sumar goles a favor
-        }
-        if (equipoActualizado.golesContra != null) {
-          equipo.goles_contra =
-            Number(equipoActualizado.golesContra) + Number(equipo.goles_contra); // Sumar goles en contra
-        }
-        if (equipoActualizado.puntos != null) {
-          equipo.puntos =
-            Number(equipoActualizado.puntos) + Number(equipo.puntos); // Sumar puntos
-        }
-        if (equipoActualizado.partidosJugados != null) {
-          equipo.partidos_jugados =
-            Number(equipoActualizado.partidosJugados) +
-            Number(equipo.partidos_jugados); // Sumar partidos jugados
-        }
+        const golesFavor =
+          equipoActualizado.golesFavor != null
+            ? Number(equipoActualizado.golesFavor)
+            : 0;
+        const golesContra =
+          equipoActualizado.golesContra != null
+            ? Number(equipoActualizado.golesContra)
+            : 0;
+        const puntos =
+          equipoActualizado.puntos != null
+            ? Number(equipoActualizado.puntos)
+            : 0;
+        const partidosJugados =
+          equipoActualizado.partidosJugados != null
+            ? Number(equipoActualizado.partidosJugados)
+            : 0;
+
+        // Actualización de los valores
+        equipo.goles_favor += golesFavor; // Sumar goles a favor
+        equipo.goles_contra += golesContra; // Sumar goles en contra
+        equipo.puntos += puntos; // Sumar puntos
+        equipo.partidos_jugados += partidosJugados; // Sumar partidos jugados
       }
     });
 

@@ -130,68 +130,72 @@
       // Cargar resultados al iniciar
       cargarResultados();
 
-      // Función para enviar datos
       document.getElementById("sendBtn").addEventListener("click", () => {
-        const resultados =
-          JSON.parse(localStorage.getItem("resultadosParciales")) || [];
-        const categorias = ["tercera", "cuarta", "quinta"]; // Categorías definidas
+    const resultados =
+      JSON.parse(localStorage.getItem("resultadosParciales")) || [];
+    const categorias = ["tercera", "cuarta", "quinta"]; // Categorías definidas
 
-        const equiposActualizados = resultados
-          .map((resultado, index) => {
-            // Determinar los puntos para cada equipo según los goles
-            const puntosLocal = calcularPuntos(
-              resultado.resultadoLocal,
-              resultado.resultadoVisitante
-            );
-            const puntosVisitante = calcularPuntos(
-              resultado.resultadoVisitante,
-              resultado.resultadoLocal
-            );
+    const equiposActualizados = resultados
+      .map((resultado, index) => {
+        // Determinar los puntos para cada equipo según los goles
+        const puntosLocal = calcularPuntos(
+          resultado.resultadoLocal,
+          resultado.resultadoVisitante
+        );
+        const puntosVisitante = calcularPuntos(
+          resultado.resultadoVisitante,
+          resultado.resultadoLocal
+        );
 
-            return [
-              {
-                nombre: resultado.equipoLocal,
-                categoria: categorias[index],
-                puntos: puntosLocal,
-                golesFavor: resultado.resultadoLocal,
-                golesContra: resultado.resultadoVisitante,
-                partidosJugados: 1, // Sumar partido
-              },
-              {
-                nombre: resultado.equipoVisitante,
-                categoria: categorias[index],
-                puntos: puntosVisitante,
-                golesFavor: resultado.resultadoVisitante,
-                golesContra: resultado.resultadoLocal,
-                partidosJugados: 1, // Sumar partido
-              },
-            ];
-          })
-          .flat(); // Unir ambos equipos en una lista
-
-        // Enviar datos al backend para actualizar el archivo allTeams.json
-        fetch("https://inferiores-vack.vercel.app/changeResult", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        return [
+          {
+            nombre: resultado.equipoLocal,
+            categoria: categorias[index],
+            puntos: puntosLocal,
+            golesFavor: resultado.resultadoLocal || 0,
+            golesContra: resultado.resultadoVisitante || 0,
+            partidosJugados: 1,
           },
-          body: JSON.stringify(equiposActualizados),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            Swal.fire({
-              title: "Datos enviados y equipos actualizados correctamente",
-              icon: "success",
-              confirmButtonText: "Volver al inicio",
-            }).then(() => {
-              window.location.href = "/"; // Redirigir a la página de inicio
-            });
-          })
-          .catch((error) => {
-            console.error("Error al enviar los datos:", error);
-            Swal.fire("Error al enviar los datos");
-          });
+          {
+            nombre: resultado.equipoVisitante,
+            categoria: categorias[index],
+            puntos: puntosVisitante,
+            golesFavor: resultado.resultadoVisitante || 0,
+            golesContra: resultado.resultadoLocal || 0,
+            partidosJugados: 1,
+          },
+        ];
+      })
+      .flat(); // Unir ambos equipos en una lista
+
+    // Enviar datos al backend para actualizar el archivo allTeams.json
+    fetch("https://inferiores-vack.vercel.app/changeResult", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(equiposActualizados),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Error en la respuesta del servidor'); // Captura el error si la respuesta no es OK
+        }
+        return response.json();
+      })
+      .then((data) => {
+        Swal.fire({
+          title: "Datos enviados y equipos actualizados correctamente",
+          icon: "success",
+          confirmButtonText: "Volver al inicio",
+        }).then(() => {
+          window.location.href = "/"; // Redirigir a la página de inicio
+        });
+      })
+      .catch((error) => {
+        console.error("Error al enviar los datos:", error);
+        Swal.fire("Error al enviar los datos");
       });
+  });
 
       document.getElementById(
         "tituloResultados"

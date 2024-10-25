@@ -68,12 +68,13 @@ td {
 }
 
 .titulo-resultados {
-  font-size: 1.2em;
+  font-size: 1.6em;
   text-align: center;
   background-color: #f0f0f0; /* Color de fondo general */
   padding: 10px;
-  color: #333;
+  color: white;
   border-bottom: 2px solid #ddd;
+  letter-spacing: 1px;
   background: #4caf50;
   font-family: "Courier New", Courier, monospace;
 }

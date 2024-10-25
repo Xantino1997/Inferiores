@@ -153,16 +153,16 @@
                 nombre: resultado.equipoLocal,
                 categoria: categorias[index],
                 puntos: puntosLocal,
-                golesFavor: resultado.resultadoLocal || 0, // Asignar 0 si no hay resultado
-                golesContra: resultado.resultadoVisitante || 0, // Asignar 0 si no hay resultado
+                golesFavor: resultado.resultadoLocal,
+                golesContra: resultado.resultadoVisitante,
                 partidosJugados: 1, // Sumar partido
               },
               {
                 nombre: resultado.equipoVisitante,
                 categoria: categorias[index],
                 puntos: puntosVisitante,
-                golesFavor: resultado.resultadoVisitante || 0, // Asignar 0 si no hay resultado
-                golesContra: resultado.resultadoLocal || 0, // Asignar 0 si no hay resultado
+                golesFavor: resultado.resultadoVisitante,
+                golesContra: resultado.resultadoLocal,
                 partidosJugados: 1, // Sumar partido
               },
             ];

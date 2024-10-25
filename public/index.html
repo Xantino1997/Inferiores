@@ -184,46 +184,47 @@
       }
 
       function cargarTabla() {
-    const tablaPosiciones = document.getElementById("tablaPosiciones");
-    tablaPosiciones.innerHTML = "";
+  const tablaPosiciones = document.getElementById("tablaPosiciones");
+  tablaPosiciones.innerHTML = "";
 
-    const equiposLocal = equipos.filter(
-        (equipo) => equipo.nombre === equiposSeleccionados[0]
-    );
-    const equiposVisitante = equipos.filter(
-        (equipo) => equipo.nombre === equiposSeleccionados[1]
-    );
-    const categorias = ["tercera", "cuarta", "quinta"];
+  const equiposLocal = equipos.filter(
+    (equipo) => equipo.nombre === equiposSeleccionados[0]
+  );
+  const equiposVisitante = equipos.filter(
+    (equipo) => equipo.nombre === equiposSeleccionados[1]
+  );
+  const categorias = ["tercera", "cuarta", "quinta"];
 
-    categorias.forEach((categoria) => {
-        const localCategoria =
-            equiposLocal.find((equipo) => equipo.categoria === categoria) ||
-            equiposLocal[0];
-        const visitanteCategoria =
-            equiposVisitante.find((equipo) => equipo.categoria === categoria) ||
-            equiposVisitante[0];
+  categorias.forEach((categoria) => {
+    const localCategoria =
+      equiposLocal.find((equipo) => equipo.categoria === categoria) ||
+      equiposLocal[0];
+    const visitanteCategoria =
+      equiposVisitante.find((equipo) => equipo.categoria === categoria) ||
+      equiposVisitante[0];
 
-        const categoriaRow = document.createElement("tr");
-        categoriaRow.innerHTML = `<td colspan="8" class="categoria-colspan">${categoria.toUpperCase()}</td>`;
-        tablaPosiciones.appendChild(categoriaRow);
+    const categoriaRow = document.createElement("tr");
+    categoriaRow.innerHTML = `<td colspan="8" class="categoria-colspan">${categoria.toUpperCase()}</td>`;
+    tablaPosiciones.appendChild(categoriaRow);
 
-        // Asumimos que el logo tiene un formato como "logo-equipo1.png"
-        const logoLocal = `Logo/${localCategoria.nombre.toLowerCase().replace(/\s+/g, '-')}.png`;
-        const logoVisitante = `Logo/${visitanteCategoria.nombre.toLowerCase().replace(/\s+/g, '-')}.png`;
+    const matchRow = document.createElement("tr");
+    
+    // Construir la URL del logo
+    const logoLocalUrl = `https://inferiores-uavb.vercel.app/Logo/${localCategoria.nombre.toLowerCase().replace(/ /g, "_")}.png`;
+    const logoVisitanteUrl = `https://inferiores-uavb.vercel.app/Logo/${visitanteCategoria.nombre.toLowerCase().replace(/ /g, "_")}.png`;
 
-        const matchRow = document.createElement("tr");
-        matchRow.innerHTML = `
-            <td><img src="${logoLocal}" class="logo" alt="Logo ${localCategoria.nombre}"></td>
-            <td>${localCategoria.nombre}</td>
-            <td><input type="number" class="result-input" placeholder="0"></td>
-            <td>VS</td>
-            <td><input type="number" class="result-input" placeholder="0"></td>
-            <td>${visitanteCategoria.nombre}</td>
-            <td><img src="${logoVisitante}" class="logo" alt="Logo ${visitanteCategoria.nombre}"></td>
-            <td><input type="checkbox" onchange="marcarNoJugaron(this)"/> No jugaron</td>
-        `;
-        tablaPosiciones.appendChild(matchRow);
-    });
+    matchRow.innerHTML = `
+      <td><img src="${logoLocalUrl}" class="logo" alt="Logo ${localCategoria.nombre}"></td>
+      <td>${localCategoria.nombre}</td>
+      <td><input type="number" class="result-input" placeholder="0"></td>
+      <td>VS</td>
+      <td><input type="number" class="result-input" placeholder="0"></td>
+      <td>${visitanteCategoria.nombre}</td>
+      <td><img src="${logoVisitanteUrl}" class="logo" alt="Logo ${visitanteCategoria.nombre}"></td>
+      <td><input type="checkbox" onchange="marcarNoJugaron(this)"/> No jugaron</td>
+    `;
+    tablaPosiciones.appendChild(matchRow);
+  });
 }
 
       // Capturar parcialmente los resultados y guardarlos en localStorage

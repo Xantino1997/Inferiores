@@ -75,7 +75,7 @@
         <thead>
           <tr>
             <th class="titulo-resultados" colspan="6">
-              Resultados de fecha <span id="fecha"> ||</span> 
+              Resultados de fecha <span id="fecha"> ||</span>
               <span id="zona"></span>
             </th>
           </tr>
@@ -169,8 +169,11 @@
           })
           .flat(); // Unir ambos equipos en una lista
 
+        const url = "https://inferiores-vack.vercel.app/changeResult";
+        const url2 = "/changeResult";
+
         // Enviar datos al backend para actualizar el archivo allTeams.json
-        fetch("https://inferiores-vack.vercel.app/changeResult", {
+        fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -216,7 +219,7 @@
             const imgData = canvas.toDataURL("image/png");
             const a = document.createElement("a");
             a.href = imgData;
-            a.download = `resultados de los partidos.png`;
+            a.download = `resultados de ${nombre}.png`;
             a.click();
           }
         );

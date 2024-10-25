@@ -65,6 +65,7 @@ app.get("/allTeams", (req, res) => {
   });
 });
 
+
 app.post("/changeResult", (req, res) => {
   const equiposActualizados = req.body; // Los datos enviados desde el frontend
 
@@ -87,22 +88,11 @@ app.post("/changeResult", (req, res) => {
       );
 
       if (equipo) {
-        const golesFavor =
-          equipoActualizado.golesFavor != null
-            ? Number(equipoActualizado.golesFavor)
-            : 0;
-        const golesContra =
-          equipoActualizado.golesContra != null
-            ? Number(equipoActualizado.golesContra)
-            : 0;
-        const puntos =
-          equipoActualizado.puntos != null
-            ? Number(equipoActualizado.puntos)
-            : 0;
-        const partidosJugados =
-          equipoActualizado.partidosJugados != null
-            ? Number(equipoActualizado.partidosJugados)
-            : 0;
+        // Asignar 0 si el valor es null o undefined
+        const golesFavor = equipoActualizado.golesFavor != null ? Number(equipoActualizado.golesFavor) : 0;
+        const golesContra = equipoActualizado.golesContra != null ? Number(equipoActualizado.golesContra) : 0;
+        const puntos = equipoActualizado.puntos != null ? Number(equipoActualizado.puntos) : 0;
+        const partidosJugados = equipoActualizado.partidosJugados != null ? Number(equipoActualizado.partidosJugados) : 0;
 
         // Actualización de los valores
         equipo.goles_favor += golesFavor; // Sumar goles a favor
@@ -116,9 +106,7 @@ app.post("/changeResult", (req, res) => {
     fs.writeFile(filePath, JSON.stringify(allTeams, null, 2), (err) => {
       if (err) {
         console.error("Error al escribir el archivo:", err);
-        return res
-          .status(500)
-          .json({ message: "Error al escribir el archivo" });
+        return res.status(500).json({ message: "Error al escribir el archivo" });
       }
 
       res.json({ message: "Equipos actualizados correctamente" });

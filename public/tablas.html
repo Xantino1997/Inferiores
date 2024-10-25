@@ -68,6 +68,13 @@
   </head>
   <body>
     <h1 id="tituloResultados">Resultados de la Fecha</h1>
+    <div
+      id="equiposEnfrentamiento"
+      style="display: flex; justify-content: center; font-weight: bold"
+    >
+      <span id="equipoLocal"></span> <span class="versus">VS</span>
+      <span id="equipoVisitante"></span>
+    </div>
     <button id="captureBtn">Capturar Pantalla</button>
 
     <div class="container">
@@ -101,34 +108,43 @@
       // Obtener parámetros de la URL
       const urlParams = new URLSearchParams(window.location.search);
       const fecha = urlParams.get("fecha");
-      const zona = urlParams.get("zona") || ""; // Obtener la zona de la URL o usar "A" por defecto
-      document.getElementById("fecha").textContent = fecha; // Mostrar la fecha en la tabla
-      document.getElementById("zona").textContent = zona; // Mostrar la zona en la tabla
+      const zona = urlParams.get("zona") || "";
+      document.getElementById("fecha").textContent = fecha;
+      document.getElementById("zona").textContent = zona;
 
-      // Cargar resultados desde localStorage
+      // Cargar resultados desde localStorage y mostrar equipos en #equiposEnfrentamiento
       function cargarResultados() {
         const resultados =
           JSON.parse(localStorage.getItem("resultadosParciales")) || [];
-        console.log("Resultados en localStorage:", resultados); // Verificación en consola
         const tbodyResultados = document.getElementById("tbodyResultados");
-        const categorias = ["Tercera", "Cuarta", "Quinta"]; // Definimos las categorías
+        const categorias = ["Tercera", "Cuarta", "Quinta"];
 
         resultados.forEach((resultado, index) => {
           const row = document.createElement("tr");
           row.innerHTML = `
-                    <td>${categorias[index]}</td> <!-- Mostrar la categoría del partido -->
-                    <td><img src="${resultado.logoLocal}" class="logo" alt="Logo ${resultado.equipoLocal}" onerror="this.onerror=null; this.src='ruta/default/logo.png';"></td>
-                    <td>${resultado.resultadoLocal}</td>
-                    <td class="versus">VS</td>
-                    <td>${resultado.resultadoVisitante}</td>
-                    <td><img src="${resultado.logoVisitante}" class="logo" alt="Logo ${resultado.equipoVisitante}" onerror="this.onerror=null; this.src='ruta/default/logo.png';"></td>
-                `;
+      <td>${categorias[index]}</td>
+      <td><img src="${resultado.logoLocal}" class="logo" alt="Logo ${resultado.equipoLocal}" onerror="this.onerror=null; this.src='ruta/default/logo.png';"></td>
+      <td>${resultado.resultadoLocal}</td>
+      <td class="versus">VS</td>
+      <td>${resultado.resultadoVisitante}</td>
+      <td><img src="${resultado.logoVisitante}" class="logo" alt="Logo ${resultado.equipoVisitante}" onerror="this.onerror=null; this.src='ruta/default/logo.png';"></td>
+    `;
           tbodyResultados.appendChild(row);
+
+          // Mostrar solo el primer enfrentamiento en el encabezado
+          if (index === 0) {
+            document.getElementById("equipoLocal").textContent =
+              resultado.equipoLocal;
+            document.getElementById("equipoVisitante").textContent =
+              resultado.equipoVisitante;
+          }
         });
       }
 
-      // Cargar resultados al iniciar
+      // Llamar a la función para cargar los resultados al iniciar
       cargarResultados();
+
+      // Cargar resultados al iniciar
 
       // Función para enviar datos
       document.getElementById("sendBtn").addEventListener("click", () => {
@@ -212,17 +228,15 @@
         return 1; // Empate
       }
 
-      // Capturar la pantalla
+      // Capturar la pantalla incluyendo los equipos enfrentados en la imagen
       document.getElementById("captureBtn").addEventListener("click", () => {
-        html2canvas(document.querySelector("#tablaResultados")).then(
-          (canvas) => {
-            const imgData = canvas.toDataURL("image/png");
-            const a = document.createElement("a");
-            a.href = imgData;
-            a.download = `resultados de ${equipoLocal} - ${equipoVisitante} .png`;
-            a.click();
-          }
-        );
+        html2canvas(document.body).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          const a = document.createElement("a");
+          a.href = imgData;
+          a.download = `resultados_de_los_partidos.png`;
+          a.click();
+        });
       });
     </script>
   </body>

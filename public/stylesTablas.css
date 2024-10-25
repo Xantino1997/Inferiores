@@ -68,37 +68,39 @@ td {
 }
 
 .titulo-resultados {
-    font-size: 1.2em;
-    text-align: center;
-    background-color: #f0f0f0; /* Color de fondo general */
-    padding: 10px;
-    color: #333;
-    border-bottom: 2px solid #ddd;
+  font-size: 1.2em;
+  text-align: center;
+  background-color: #f0f0f0; /* Color de fondo general */
+  padding: 10px;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  background: #4caf50;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .titulo-resultados div {
-    margin: 5px 0; /* Espacio entre las líneas */
+  margin: 5px 0; /* Espacio entre las líneas */
 }
 
 #fecha {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 #equipoLocal,
 #equipoVisitante {
-    font-weight: bold;
-    color: #333;
+  font-weight: bold;
+  color: #333;
 }
 
 .VS {
-    background-color: #000;
-    color: #00FFFF; /* Color cian */
-    font-weight: bold;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin: 0 5px;
-    text-transform: uppercase;
-    font-family: "Courier New", Courier, monospace;
+  background-color: #000;
+  color: #00ffff; /* Color cian */
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin: 0 5px;
+  text-transform: uppercase;
+  font-family: "Courier New", Courier, monospace;
 }
 
 #captureBtn,

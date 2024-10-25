@@ -81,6 +81,12 @@ td {
 
 .titulo-resultados div {
   margin: 5px 0; /* Espacio entre las líneas */
+  padding: 10px;
+  color: white;
+  border-bottom: 2px solid #ddd;
+  letter-spacing: 1px;
+  background: #4caf50;
+  font-family: "Courier New", Courier, monospace;
 }
 
 #fecha {

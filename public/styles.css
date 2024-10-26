@@ -31,7 +31,10 @@ input[type="text"] {
   margin-bottom: 20px;
 }
 .categoria-colspan{
-  background-color:#4caf50;;
+  background-color:#4caf50;
+  color:#fff;
+  font-weight: bold;
+
 }
 .checkbox-container {
   display: flex;
@@ -88,6 +91,9 @@ th {
 
 td {
   font-size: 16px;
+}
+tr{
+  margin-top:10px;
 }
 
 .logo {

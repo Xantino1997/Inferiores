@@ -80,7 +80,7 @@ td {
 }
 
 .equipoVersus {
-  font-size: 1.7em;
+  font-size: 1.2em;
   margin: 5px 0; 
   padding: 10px;
   background: #4caf50;
@@ -90,17 +90,6 @@ td {
   margin: 5px 0; 
   padding: 10px;
   color: white;
-  font-family: "Courier New", Courier, monospace;
-}
-.equipoVersus {
-  font-size: 1.8em;
-  margin: 5px 0; 
-  padding: 10px;
-  color: white;
-  background-color: #f0f0f0;
-  letter-spacing: 1px;
-  background: #4caf50;
-  font-family: "Courier New", Courier, monospace;
 }
 
 #fecha {
